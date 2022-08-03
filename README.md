@@ -10,6 +10,7 @@ The Artifact Rater aims to make it easier to compare different artifacts by allo
 
 ![](Planner/ERD.jpg)
 
+
 ### Authentication Routes
 
 | Verb   | URI Pattern            | Controller#Action |
@@ -38,6 +39,10 @@ The Artifact Rater aims to make it easier to compare different artifacts by allo
 | GET   | `/Character/:id`          |
 | PATCH  | `/Character/:id`       |
 | DELETE | `/Character/:id`       |
+
+### Seed Data
+
+Seed data will be provided using a selection of my own artifacts. The images for these artifacts, as well as their JSON transcriptions, can be found in `/app/utils`.
 
 ### Roles
 - Manager: Tyson
