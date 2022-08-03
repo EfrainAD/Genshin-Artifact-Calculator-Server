@@ -1,0 +1,132 @@
+[
+  {
+    "name": "Ornate Kabuto",
+    "set": "emblem",
+    "slot": "hat",
+    "level": "20",
+    "mainStat": "critRate",
+    "mainStatAmount": "31.1",
+    "substats": [
+      {
+        "stat": "critDmg",
+        "amount": "24.9"
+      },
+      {
+        "stat": "HP",
+        "amount": "508"
+      },
+      {
+        "stat": "Def%",
+        "amount": "13.1"
+      },
+      {
+        "stat": "EM",
+        "amount": "16"
+      }
+    ]
+  },
+  {
+    "name": "Viridescent Venerer's Vessel",
+    "set": "viridescent",
+    "slot": "cup",
+    "level": "20",
+    "mainStat": "Atk%",
+    "mainStatAmount": "46.6",
+    "substats": [
+      {
+        "stat": "critRate",
+        "amount": "12.8"
+      },
+      {
+        "stat": "critDmg",
+        "amount": "14.0"
+      },
+      {
+        "stat": "Def%",
+        "amount": "5.8"
+      },
+      {
+        "stat": "Def",
+        "amount": "21"
+      }
+    ]
+  },
+  {
+    "name": "Storm Cage",
+    "set": "emblem",
+    "slot": "sands",
+    "level": "20",
+    "mainStat": "ER",
+    "mainStatAmount": "51.8",
+    "substats": [
+      {
+        "stat": "HP",
+        "amount": "448"
+      },
+      {
+        "stat": "Atk",
+        "amount": "19"
+      },
+      {
+        "stat": "critRate",
+        "amount": "10.9"
+      },
+      {
+        "stat": "critDmg",
+        "amount": "13.2"
+      }
+    ]
+  },
+  {
+    "name": "Sundered Feather",
+    "set": "emblem",
+    "slot": "feather",
+    "level": "20",
+    "mainStat": "Atk",
+    "mainStatAmount": "311",
+    "substats": [
+      {
+        "stat": "ER",
+        "amount": "5.2"
+      },
+      {
+        "stat": "critDmg",
+        "amount": "18.7"
+      },
+      {
+        "stat": "HP",
+        "amount": "299"
+      },
+      {
+        "stat": "critRate",
+        "amount": "9.7"
+      }
+    ]
+  },
+  {
+    "name": "Magnificent Tsuba",
+    "set": "emblem",
+    "slot": "flower",
+    "level": "20",
+    "mainStat": "HP",
+    "mainStatAmount": "4780",
+    "substats": [
+      {
+        "stat": "critDmg",
+        "amount": "28.0"
+      },
+      {
+        "stat": "Atk%",
+        "amount": "4.7"
+      },
+      {
+        "stat": "critRate",
+        "amount": "2.7"
+      },
+      {
+        "stat": "Atk",
+        "amount": "51"
+      }
+    ]
+  }
+]
