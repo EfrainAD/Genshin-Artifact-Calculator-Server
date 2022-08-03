@@ -39,6 +39,33 @@ As a user, I would like to:
 
 ![](Planner/ERD.jpg)
 
+### Authentication Routes
+
+| Verb   | URI Pattern            | Controller#Action |
+|--------|------------------------|-------------------|
+| POST   | `/sign-up`             | `users#signup`    |
+| POST   | `/sign-in`             | `users#signin`    |
+| PATCH  | `/change-password/` | `users#changepw`  |
+| DELETE | `/sign-out/`        | `users#signout`   |
+
+### Artifact
+
+| Verb   | URI Pattern            | 
+|--------|------------------------|
+| POST   | `/artifact`             |
+| GET   | `/artifact`               |
+| GET   | `/artifact/:id`          |
+| PATCH  | `/artifact/:id`       |
+| DELETE | `/artifact/:id`       |
+
+| Verb   | URI Pattern            | 
+|--------|------------------------|
+| POST   | `/Character`             |
+| GET   | `/Character`               |
+| GET   | `/Character/:id`          |
+| PATCH  | `/Character/:id`       |
+| DELETE | `/Character/:id`       |
+
 ### Roles
 - Manager: Tyson
 - Front-End SME: Efrain
