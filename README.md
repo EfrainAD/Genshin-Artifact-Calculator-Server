@@ -39,6 +39,10 @@ As a user, I would like to:
 
 ![](Planner/ERD.jpg)
 
+### Seed Data
+
+Seed data will be provided using a selection of my own artifacts. The images for these artifacts, as well as their JSON transcriptions, can be found in `/app/utils`.
+
 ### Roles
 - Manager: Tyson
 - Front-End SME: Efrain
