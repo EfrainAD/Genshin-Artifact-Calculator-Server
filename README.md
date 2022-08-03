@@ -26,14 +26,18 @@ As a user, I would like to:
 
 ### Wireframes
 
-![](/wireframes/1.jpeg)
-![](/wireframes/2.jpeg)
-![](/wireframes/3.jpeg)
-![](/wireframes/4.jpeg)
-![](/wireframes/5.jpeg)
-![](/wireframes/6.jpeg)
-![](/wireframes/7.jpeg)
-![](/wireframes/8.jpeg)
+![](Planner/wireframes/1.jpeg)
+![](Planner/wireframes/2.jpeg)
+![](Planner/wireframes/3.jpeg)
+![](Planner/wireframes/4.jpeg)
+![](Planner/wireframes/5.jpeg)
+![](Planner/wireframes/6.jpeg)
+![](Planner/wireframes/7.jpeg)
+![](Planner/wireframes/8.jpeg)
+
+### ERD
+
+![](Planner/ERD.jpg)
 
 ### Roles
 - Manager: Tyson
