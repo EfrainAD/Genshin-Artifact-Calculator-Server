@@ -1,3 +1,6 @@
+# To be used in conjuction with Genshin Artifact Calculator
+https://github.com/mcguirto/Genshin-Artifact-Calculator-Server.git
+
 # Genshin Impact Artifact Rater
 A helper app for the popular video game Genshin Impact. An important part of Genshin's endgame is farming for "artifacts", which can be powered up to semi-randomly increase their stats. Having artifacts that roll the proper stats can be extremely helpful for a player, but since there are several layers of randomness, it can sometimes be difficult to tell exactly how good one artifact is compared to another.
 
