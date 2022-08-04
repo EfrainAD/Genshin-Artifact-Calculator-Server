@@ -97,6 +97,26 @@ const POSSIBLE_SUBSTAT_ROLLS = {
   "ER": [4.53, 5.18, 5.83, 6.48]
 }
 
+// this will be user-defined as a stretch goal, but I'm putting it here for now
+// in the interest of testing and practicality. this weights the substats by
+// desirability for the purposes of ranking them; a stat with a lower weight
+// contributes less to the power of an artifact. in the data given here, for
+// instance, rolls into defense, HP, etc. are considered totally wasted when
+// assessing an artifact's power, while rolls into crit rate and crit damage
+// would be considered the most heavily.
+const SUBSTAT_WEIGHTING = {
+  "Atk": 0,
+  "Atk%": 0.5,
+  "HP": 0,
+  "HP%": 0,
+  "Def": 0,
+  "Def%": 0,
+  "critRate": 1,
+  "critDmg": 1,
+  "EM": 0,
+  "ER": 0
+}
+
 const ARTIFACT_SETS = [
   {
     "id": 0,
@@ -658,5 +678,6 @@ const ARTIFACT_SETS = [
 module.exports = {
   MAIN_STAT_PROGRESSION,
   POSSIBLE_SUBSTAT_ROLLS,
-  ARTIFACT_SETS
+  ARTIFACT_SETS,
+  SUBSTAT_WEIGHTING
 };
