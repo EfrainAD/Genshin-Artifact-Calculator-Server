@@ -18,18 +18,6 @@
 /* this raw data is here if we happen to need it in the future, but it's
     commented out for now!
 
-equip_list_artifact_parse_descriptions = [
-  "Name",
-  "Slot",
-  "Main Stat",
-  "Main Stat Value",
-  "Artifact Level",
-  "Sub Stat",
-  "Sub Stat",
-  "Sub Stat",
-  "Sub Stat"
-]
-
 equip_list_artifacts_stats = {
   "flower": [
       "hp"

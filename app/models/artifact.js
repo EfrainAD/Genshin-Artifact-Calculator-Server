@@ -6,6 +6,11 @@ const artifactSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	slot: {
+		type: String,
+		required: true,
+		enum: ["flower", "feather", "sands", "goblet", "circlet"]
+	},
 	level: {
 		type: Number,
 		required: true
@@ -37,11 +42,9 @@ const artifactSchema = new mongoose.Schema({
 	timestamps: true,
 });
 
-// find the artifact's set from its proper name
+// find the artifact's set from its proper name and its slot
 artifactSchema.virtual("set").get(function() {
-	return getSetFromName(this.name);
+	return getSetFromName(this.name, this.slot);
 });
-
-getSetFromName();
 
 module.exports = mongoose.model("Artifact", artifactSchema);
