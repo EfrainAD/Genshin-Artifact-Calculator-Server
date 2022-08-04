@@ -10,18 +10,22 @@ const round1 = (n) => {
 // recursively finds combinations of numbers in possibleRolls that add up to
 // the target value
 const subsetSum = (possibleRolls, target, found, oneDecimal, partials = []) => {
-  const sum = oneDecimal ? 
-              round1(partials.reduce((acc, n) => (acc + n), 0)) :
-              Math.round(partials.reduce((acc, n) => (acc + n), 0));
+  // genshin unpredictably rounds in some places and truncates in others, so
+  // we regrettably need to check both possibilities; if there's any rhyme or
+  // reason to when it does one or the other, I haven't been able to find it.
+  // the values that are decimals do seem to be reliably rounded to a tenth,
+  // however, which makes our lives just a bit nicer.
+  const rawSum = partials.reduce((acc, n) => (acc + n), 0);
+  const sum = oneDecimal ? round1(rawSum) : Math.floor(rawSum);
+  const sumAlt = oneDecimal ? sum : Math.round(rawSum);
 
   // if the partial sum equals our (rounded) target, we're looking good!
-  if (sum === target) { found.push(partials); }
+  if (sum === target || sumAlt === target) { found.push(partials); }
   // halt the current branch if we're at or above the target
   if (sum >= target) { return; }
   // for safety, halt the current branch if we've gone above six rolls, which
   // is not numerically possible in genshin
   if (partials.length > 6) { return; }
-
 
   // recursively push numbers from possibleRolls into our partial sum, and then
   // recalculate
