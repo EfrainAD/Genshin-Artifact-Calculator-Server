@@ -1,5 +1,5 @@
 const { POSSIBLE_SUBSTAT_ROLLS, SUBSTAT_WEIGHTING } = require("../../data/artifact-data");
-const { findCombos } = require("../find-combinations.js");
+const findCombos = require("../find-combinations");
 
 const TEST_ARTIFACT = {
   "name": "Viridescent Venerer's Vessel",
@@ -32,9 +32,12 @@ const TEST_ARTIFACT = {
 const ratePower = (artifact) => {
   // pull more detailed information about each substat -- most importantly, how
   // many rolls went into it
-  const substats = artifact.substats.map(sub => {
-    sub.weight = SUBSTAT_WEIGHTING[sub.stat];
-    sub.numRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[sub.stat], sub.amount);
+  const substats = artifact.substats.map(thisSub => {
+    thisSub.weight = SUBSTAT_WEIGHTING[thisSub.stat];
+    const subRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[thisSub.stat], thisSub.amount, thisSub.stat);
+    thisSub.subRolls = subRolls;
+
+    return thisSub;
   });
 
   console.log(substats);

@@ -97,6 +97,15 @@ const POSSIBLE_SUBSTAT_ROLLS = {
   "ER": [4.53, 5.18, 5.83, 6.48]
 }
 
+const DECIMAL_STATS = [
+    "Atk%",
+    "HP%",
+    "Def%",
+    "critRate",
+    "critDmg",
+    "ER"
+]
+
 // this will be user-defined as a stretch goal, but I'm putting it here for now
 // in the interest of testing and practicality. this weights the substats by
 // desirability for the purposes of ranking them; a stat with a lower weight
@@ -679,5 +688,6 @@ module.exports = {
   MAIN_STAT_PROGRESSION,
   POSSIBLE_SUBSTAT_ROLLS,
   ARTIFACT_SETS,
-  SUBSTAT_WEIGHTING
+  SUBSTAT_WEIGHTING,
+  DECIMAL_STATS
 };
