@@ -42,4 +42,6 @@ artifactSchema.virtual("set").get(function() {
 	return getSetFromName(this.name);
 });
 
+getSetFromName();
+
 module.exports = mongoose.model("Artifact", artifactSchema);

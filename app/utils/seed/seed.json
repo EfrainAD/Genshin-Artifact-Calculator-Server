@@ -2,7 +2,7 @@
   {
     "name": "Ornate Kabuto",
     "set": "emblem",
-    "slot": "hat",
+    "slot": "circlet",
     "level": "20",
     "mainStat": "critRate",
     "mainStatAmount": "31.1",
@@ -28,7 +28,7 @@
   {
     "name": "Viridescent Venerer's Vessel",
     "set": "viridescent",
-    "slot": "cup",
+    "slot": "goblet",
     "level": "20",
     "mainStat": "Atk%",
     "mainStatAmount": "46.6",
