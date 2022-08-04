@@ -20,23 +20,23 @@
 
 equip_list_artifacts_stats = {
   "flower": [
-      "hp"
+      "HP"
   ],
   "feather": [
-      "atk"
+      "Atk"
   ],
   "sands": [
-      "atk%",
-      "hp%",
-      "def%",
-      "elemastery",
-      "recharge"
+      "Atk%",
+      "HP%",
+      "Def%",
+      "EM",
+      "ER"
   ],
   "goblet": [
-      "atk%",
-      "hp%",
-      "def%",
-      "elemastery",
+      "Atk%",
+      "HP%",
+      "Def%",
+      "EM",
       "physical",
       "anemo",
       "cryo",
@@ -46,12 +46,12 @@ equip_list_artifacts_stats = {
       "pyro"
   ],
   "circlet": [
-      "atk%",
-      "hp%",
-      "def%",
-      "elemastery",
-      "crit",
-      "critdmg",
+      "Atk%",
+      "HP%",
+      "Def%",
+      "EM",
+      "critRate",
+      "critDmg",
       "healing"
   ]
 }
@@ -65,13 +65,13 @@ equip_list_artifacts_name = [
 ] */
 
 const MAIN_STAT_PROGRESSION = {
-  "hp": [717, 920, 1123, 1326, 1530, 1733, 1936, 2139, 2342, 2545, 2749, 2952, 3155, 3358, 3561, 3764, 3967, 4171, 4374, 4577, 4780],
-  "atk": [47, 60, 73, 86, 100, 113, 126, 139, 152, 166, 179, 192, 205, 219, 232, 245, 258, 272, 285, 298, 311],
-  "atk%": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
-  "hp%": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
-  "def%": [8.7, 11.2, 13.7, 16.2, 18.6, 21.1, 23.6, 26.1, 28.6, 31, 33.5, 36, 38.5, 40.9, 43.4, 45.9, 48.4, 50.8, 53.3, 55.8, 58.3],
-  "elemastery": [28, 36, 44, 52, 60, 68, 76, 84, 91, 99, 107, 115, 123, 131, 139, 147, 155, 163, 171, 179, 187],
-  "recharge": [7.8, 10, 12.2, 14.4, 16.6, 18.8, 21, 23.2, 25.4, 27.6, 29.8, 32, 34.2, 36.4, 38.6, 40.8, 43, 45.2, 47.4, 49.6, 51.8],
+  "HP": [717, 920, 1123, 1326, 1530, 1733, 1936, 2139, 2342, 2545, 2749, 2952, 3155, 3358, 3561, 3764, 3967, 4171, 4374, 4577, 4780],
+  "Atk": [47, 60, 73, 86, 100, 113, 126, 139, 152, 166, 179, 192, 205, 219, 232, 245, 258, 272, 285, 298, 311],
+  "Atk%": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
+  "HP%": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
+  "Def%": [8.7, 11.2, 13.7, 16.2, 18.6, 21.1, 23.6, 26.1, 28.6, 31, 33.5, 36, 38.5, 40.9, 43.4, 45.9, 48.4, 50.8, 53.3, 55.8, 58.3],
+  "EM": [28, 36, 44, 52, 60, 68, 76, 84, 91, 99, 107, 115, 123, 131, 139, 147, 155, 163, 171, 179, 187],
+  "ER": [7.8, 10, 12.2, 14.4, 16.6, 18.8, 21, 23.2, 25.4, 27.6, 29.8, 32, 34.2, 36.4, 38.6, 40.8, 43, 45.2, 47.4, 49.6, 51.8],
   "physical": [8.7, 11.2, 13.7, 16.2, 18.6, 21.1, 23.6, 26.1, 28.6, 31, 33.5, 36, 38.5, 40.9, 43.4, 45.9, 48.4, 50.8, 53.3, 55.8, 58.3],
   "anemo": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
   "cryo": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
@@ -79,22 +79,51 @@ const MAIN_STAT_PROGRESSION = {
   "geo": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
   "hydro": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
   "pyro": [7, 9, 11, 12.9, 14.9, 16.9, 18.9, 20.9, 22.8, 24.8, 26.8, 28.8, 30.8, 32.8, 34.7, 36.7, 38.7, 40.7, 42.7, 44.6, 46.6],
-  "crit": [4.7, 6, 7.3, 8.6, 9.9, 11.3, 12.6, 13.9, 15.2, 16.6, 17.9, 19.2, 20.5, 21.8, 23.2, 24.5, 25.8, 27.1, 28.4, 29.8, 31.1],
-  "critdmg": [9.3, 12, 14.6, 17.3, 19.9, 22.5, 25.2, 27.8, 30.5, 33.1, 35.7, 38.4, 41, 43.7, 46.3, 49, 51.6, 54.2, 56.9, 59.5, 62.2],
+  "critRate": [4.7, 6, 7.3, 8.6, 9.9, 11.3, 12.6, 13.9, 15.2, 16.6, 17.9, 19.2, 20.5, 21.8, 23.2, 24.5, 25.8, 27.1, 28.4, 29.8, 31.1],
+  "critDmg": [9.3, 12, 14.6, 17.3, 19.9, 22.5, 25.2, 27.8, 30.5, 33.1, 35.7, 38.4, 41, 43.7, 46.3, 49, 51.6, 54.2, 56.9, 59.5, 62.2],
   "healing": [5.4, 6.9, 8.4, 10, 11.5, 13, 14.5, 16.1, 17.6, 19.1, 20.6, 22.2, 23.7, 25.2, 26.7, 28.3, 29.8, 31.3, 32.8, 34.4, 35.9]
 }
 
 const POSSIBLE_SUBSTAT_ROLLS = {
-"atk": [13.62,15.56,17.51,19.45],
-"atk%": [4.08,4.66,5.25,5.83],
-"hp": [209.13,239,269.88,299.75],
-"hp%": [4.08, 4.66, 5.25, 5.83],
-"def": [16.2,18.52,20.83,23.15],
-"def%": [5.1,5.83,6.56,7.29],
-"crit": [2.72,3.11,3.5,3.89],
-"critdmg": [5.44,6.22,6.99,7.77],
-"elemastery": [16.32,18.65,20.98,23.31],
-"recharge": [4.53,5.18,5.83,6.48]
+  "Atk": [13.62, 15.56, 17.51, 19.45],
+  "Atk%": [4.08, 4.66, 5.25, 5.83],
+  "HP": [209.13, 239, 269.88, 299.75],
+  "HP%": [4.08, 4.66, 5.25, 5.83],
+  "Def": [16.2, 18.52, 20.83, 23.15],
+  "Def%": [5.1, 5.83, 6.56, 7.29],
+  "critRate": [2.72, 3.11, 3.5, 3.89],
+  "critDmg": [5.44, 6.22, 6.99, 7.77],
+  "EM": [16.32, 18.65, 20.98, 23.31],
+  "ER": [4.53, 5.18, 5.83, 6.48]
+}
+
+const DECIMAL_STATS = [
+    "Atk%",
+    "HP%",
+    "Def%",
+    "critRate",
+    "critDmg",
+    "ER"
+]
+
+// this will be user-defined as a stretch goal, but I'm putting it here for now
+// in the interest of testing and practicality. this weights the substats by
+// desirability for the purposes of ranking them; a stat with a lower weight
+// contributes less to the power of an artifact. in the data given here, for
+// instance, rolls into defense, HP, etc. are considered totally wasted when
+// assessing an artifact's power, while rolls into crit rate and crit damage
+// would be considered the most heavily.
+const SUBSTAT_WEIGHTING = {
+  "Atk": 0,
+  "Atk%": 0.5,
+  "HP": 0,
+  "HP%": 0,
+  "Def": 0,
+  "Def%": 0,
+  "critRate": 1,
+  "critDmg": 1,
+  "EM": 0,
+  "ER": 0
 }
 
 const ARTIFACT_SETS = [
@@ -114,7 +143,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "GladiatorsFinale",
     "set_bonus": [
         {
-            "stat": "atk%",
+            "stat": "Atk%",
             "value": 18,
             "req": 2
         },
@@ -206,7 +235,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "WanderersTroupe",
     "set_bonus": [
         {
-            "stat": "elemastery",
+            "stat": "EM",
             "value": 80,
             "req": 2
         },
@@ -499,7 +528,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "TenacityOfTheMillelith",
     "set_bonus": [
         {
-            "stat": "hp%",
+            "stat": "HP%",
             "value": 20,
             "req": 2
         },
@@ -522,7 +551,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "ShimenawasReminiscence",
     "set_bonus": [
         {
-            "stat": "atk%",
+            "stat": "Atk%",
             "value": 18,
             "req": 2
         },
@@ -545,12 +574,12 @@ const ARTIFACT_SETS = [
     "scanner_key": "EmblemOfSeveredFate",
     "set_bonus": [
         {
-            "stat": "recharge",
+            "stat": "ER",
             "value": 20,
             "req": 2
         },
         {
-            "stat": "Increases Elemental Burst DMG by 25% of Energy Recharge. A maximum of 75% bonus DMG can be obtained in this way.",
+            "stat": "Increases Elemental Burst DMG by 25% of Energy ER. A maximum of 75% bonus DMG can be obtained in this way.",
             "value": 0,
             "req": 4,
             "apply": { "id": 419, "option": 0 }
@@ -568,7 +597,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "HuskOfOpulentDreams",
     "set_bonus": [
         {
-            "stat": "def%",
+            "stat": "Def%",
             "value": 30,
             "req": 2
         },
@@ -613,7 +642,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "VermillionHereafter",
     "set_bonus": [
         {
-            "stat": "atk%",
+            "stat": "Atk%",
             "value": 18,
             "req": 2
         },
@@ -636,7 +665,7 @@ const ARTIFACT_SETS = [
     "scanner_key": "EchoesOfAnOffering",
     "set_bonus": [
         {
-            "stat": "atk%",
+            "stat": "Atk%",
             "value": 18,
             "req": 2
         },
@@ -658,5 +687,7 @@ const ARTIFACT_SETS = [
 module.exports = {
   MAIN_STAT_PROGRESSION,
   POSSIBLE_SUBSTAT_ROLLS,
-  ARTIFACT_SETS
+  ARTIFACT_SETS,
+  SUBSTAT_WEIGHTING,
+  DECIMAL_STATS
 };
