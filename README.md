@@ -42,7 +42,7 @@ The Artifact Rater aims to make it easier to compare different artifacts by allo
 
 ### Seed Data
 
-Seed data will be provided using a selection of my own artifacts. The images for these artifacts, as well as their JSON transcriptions, can be found in `/app/utils`.
+Seed data will be provided using a selection of my own artifacts. The images for these artifacts, as well as their JSON transcriptions, can be found in `/app/utils/seed`.
 
 ### Roles
 - Manager: Tyson
