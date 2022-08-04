@@ -1,7 +1,6 @@
 [
   {
     "name": "Ornate Kabuto",
-    "set": "emblem",
     "slot": "circlet",
     "level": "20",
     "mainStat": "critRate",
@@ -27,7 +26,6 @@
   },
   {
     "name": "Viridescent Venerer's Vessel",
-    "set": "viridescent",
     "slot": "goblet",
     "level": "20",
     "mainStat": "Atk%",
@@ -53,7 +51,6 @@
   },
   {
     "name": "Storm Cage",
-    "set": "emblem",
     "slot": "sands",
     "level": "20",
     "mainStat": "ER",
@@ -79,7 +76,6 @@
   },
   {
     "name": "Sundered Feather",
-    "set": "emblem",
     "slot": "feather",
     "level": "20",
     "mainStat": "Atk",
@@ -105,7 +101,6 @@
   },
   {
     "name": "Magnificent Tsuba",
-    "set": "emblem",
     "slot": "flower",
     "level": "20",
     "mainStat": "HP",

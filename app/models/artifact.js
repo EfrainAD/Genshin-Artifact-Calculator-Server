@@ -33,11 +33,11 @@ const artifactSchema = new mongoose.Schema({
 			required: true
 		}
 	}],
-	owner: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: "User",
-		required: true
-	}
+	// owner: {
+	// 	type: mongoose.Schema.Types.ObjectId,
+	// 	ref: "User",
+	// 	required: true
+	// }
 }, {
 	timestamps: true,
 });
