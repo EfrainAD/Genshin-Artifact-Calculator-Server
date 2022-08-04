@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { nameToSet } = require('../utils/data/name-to-set');
+const { getSetFromName } = require('../utils/get-set-from-name');
 
 const artifactSchema = new mongoose.Schema({
 	name: {
@@ -39,7 +39,7 @@ const artifactSchema = new mongoose.Schema({
 
 // find the artifact's set from its proper name
 artifactSchema.virtual("set").get(function() {
-	return nameToSet(this.name);
+	return getSetFromName(this.name);
 });
 
 module.exports = mongoose.model("Artifact", artifactSchema);
