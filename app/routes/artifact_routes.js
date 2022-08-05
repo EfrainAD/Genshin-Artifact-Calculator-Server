@@ -60,7 +60,7 @@ router.get('/artifacts/:id', /* requireToken, */	 (req, res, next) => {
 
 // CREATE
 // POST /artifacts
-router.post('/artifacts', /* requireToken, */ (req, res, next) => {
+router.post('/artifacts', requireToken, (req, res, next) => {
 	// set owner of new artifact to be current user
 	req.body.artifact.owner = req.user.id
 

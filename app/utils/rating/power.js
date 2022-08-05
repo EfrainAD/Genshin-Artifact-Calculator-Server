@@ -26,23 +26,31 @@ const ratePower = (artifact) => {
     sub.effectiveRolls = sub.actualAmount / sub.maxAmount * sub.rollCount;
   });
 
-  // now, multiply the effective substats by their weightings and divide by
-  // the maximum number of useful rolls to get the overall substat utilization.
-  // this is a bit of an oversimplification because in some cases (ex. our
-  // default weighting parameters) there aren't even four useful substats, but
-  // it will do for now.
-  const HYPOTHETICAL_MAX_SUBSTATS = 9;
+  // the "perfect" artifact has nine different substat rolls -- four of them
+  // go into generating the initial substats, and the other five add on to the
+  // existing substats. in general, characters do not have four different
+  // substats that are all useful, so we'll have to account for that when doing
+  // our assessment. we'll use the substat weighting to figure out how many
+  // useful substats there are, so that the final calculation will have
+  // (4 - useful substats) rolls of leeway for the inaccessible rolls.
+  const HYPOTHETICAL_MAX_ROLLS = 9;
+  const NUMBER_OF_SUBSTATS = 4;
+  const usefulSubstats = substats.reduce((sum, sub) => (sum + sub.weight), 0);
 
-  const substatUtilization = substats.reduce((sum, sub) => {
+  const inaccessibleRolls = NUMBER_OF_SUBSTATS - usefulSubstats;
+  const totalEffRolls = substats.reduce((sum, sub) => {
+    // multiply by sub.weight to remove substats that are not considered useful
     return sum + sub.effectiveRolls * sub.weight;
-  }, 0) / HYPOTHETICAL_MAX_SUBSTATS;
+  }, 0);
+
+  const substatUtilization = totalEffRolls / (HYPOTHETICAL_MAX_ROLLS - inaccessibleRolls);
 
   // we can format this as a nicer number later
   return substatUtilization;
 }
 
 // for testing purposes
-const seed = require("../seed/seed.json");
-for (const artifact of seed) { console.log(ratePower(artifact)); }
+// const seed = require("../seed/seed.json");
+// for (const artifact of seed) { console.log(ratePower(artifact)); }
 
 module.exports = ratePower;
