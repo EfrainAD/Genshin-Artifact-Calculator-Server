@@ -50,7 +50,7 @@ const ratePower = (artifact) => {
 }
 
 // for testing purposes
-// const seed = require("../seed/seed.json");
-// for (const artifact of seed) { console.log(ratePower(artifact)); }
+const seed = require("../seed/seed.json");
+for (const artifact of seed) { console.log(ratePower(artifact)); }
 
 module.exports = ratePower;
