@@ -29,8 +29,9 @@ const router = express.Router()
 
 // INDEX
 // GET /artifacts
-router.get('/artifacts', /* requireToken, */ (req, res, next) => {
-	Artifact.find()
+router.get('/artifacts',  requireToken,  (req, res, next) => {
+	
+	Artifact.find({owner: req.user.id})
 		.then((artifacts) => {
 			// `artifacts` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to
@@ -48,12 +49,15 @@ router.get('/artifacts', /* requireToken, */ (req, res, next) => {
 
 // SHOW
 // GET /artifacts/5a7db6c74d55bc51bdf39793
-router.get('/artifacts/:id', /* requireToken, */	 (req, res, next) => {
+router.get('/artifacts/:id',  requireToken,  (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Artifact.findById(req.params.id)
+	Artifact.findOne({_id: req.params.id, owner: req.user.id})
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "artifact" JSON
-		.then((artifact) => res.status(200).json({ artifact: artifact.toObject() }))
+		.then((artifact) => {
+			// requireOwnership(req, artifact)
+			res.status(200).json({ artifact: artifact.toObject() })
+		})	
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
