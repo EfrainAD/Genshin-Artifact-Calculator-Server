@@ -104,7 +104,7 @@ router.patch('/artifacts/:id', /* requireToken, */ removeBlanks, (req, res, next
 
 // DESTROY
 // DELETE /artifacts/5a7db6c74d55bc51bdf39793
-router.delete('/artifacts/:id', /* requireToken, */ (req, res, next) => {
+router.delete('/artifacts/:id',  requireToken,  (req, res, next) => {
 	Artifact.findById(req.params.id)
 		.then(handle404)
 		.then((artifact) => {
