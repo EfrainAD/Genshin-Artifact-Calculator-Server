@@ -81,14 +81,15 @@ router.post('/artifacts', requireToken, (req, res, next) => {
 
 // UPDATE
 // PATCH /artifacts/5a7db6c74d55bc51bdf39793
-router.patch('/artifacts/:id', /* requireToken, */ removeBlanks, (req, res, next) => {
+router.patch('/artifacts/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
-	delete req.body.artifact.owner
-
+	// delete req.body.artifact.owner
+	console.log('It was found ', req.params._id)
 	Artifact.findById(req.params.id)
 		.then(handle404)
 		.then((artifact) => {
+			
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
 			requireOwnership(req, artifact)
