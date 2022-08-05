@@ -49,9 +49,9 @@ router.get('/artifacts',  requireToken,  (req, res, next) => {
 
 // SHOW
 // GET /artifacts/5a7db6c74d55bc51bdf39793
-router.get('/artifacts/:id', requireToken, (req, res, next) => {
+router.get('/artifacts/:id',  requireToken,  (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Artifact.find({id: req.params.id})
+	Artifact.findOne({_id: req.params.id, owner: req.user.id})
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "artifact" JSON
 		.then((artifact) => {
