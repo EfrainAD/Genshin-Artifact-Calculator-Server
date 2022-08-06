@@ -3,8 +3,8 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// pull in Mongoose model for artifacts
-const Artifact = require('../models/artifact')
+// pull in Mongoose model for characters
+const Character = require('../models/character')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -28,50 +28,50 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /artifacts
-router.get('/artifacts',  requireToken,  (req, res, next) => {
+// GET /characters
+router.get('/characters',  requireToken,  (req, res, next) => {
 	
-	Artifact.find({owner: req.user.id})
-		.then((artifacts) => {
-			// `artifacts` will be an array of Mongoose documents
+	Character.find({owner: req.user.id})
+		.then((characters) => {
+			// `characters` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to
 			// apply `.toObject` to each one
-			return artifacts.map((artifact) => artifact.toObject())
+			return characters.map((character) => character.toObject())
 		})
-		// respond with status 200 and JSON of the artifacts
-		.then((artifacts) => {
-			console.log(artifacts)
-			res.status(200).json({ artifacts })
+		// respond with status 200 and JSON of the characters
+		.then((characters) => {
+			console.log(characters)
+			res.status(200).json({ characters })
 		})
 		// if an error occurs, pass it to the handler
 		.catch(next);
 })
 
 // SHOW
-// GET /artifacts/5a7db6c74d55bc51bdf39793
-router.get('/artifacts/:id',  requireToken,  (req, res, next) => {
+// GET /characters/5a7db6c74d55bc51bdf39793
+router.get('/characters/:id',  requireToken,  (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	Artifact.findOne({_id: req.params.id, owner: req.user.id})
+	Character.findOne({_id: req.params.id, owner: req.user.id})
 		.then(handle404)
-		// if `findById` is succesful, respond with 200 and "artifact" JSON
-		.then((artifact) => {
-			// requireOwnership(req, artifact)
-			res.status(200).json({ artifact: artifact.toObject() })
+		// if `findById` is succesful, respond with 200 and "character" JSON
+		.then((character) => {
+			// requireOwnership(req, character)
+			res.status(200).json({ character: character.toObject() })
 		})	
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
 
 // CREATE
-// POST /artifacts
-router.post('/artifacts', requireToken, (req, res, next) => {
-	// set owner of new artifact to be current user
-	req.body.artifact.owner = req.user.id
+// POST /characters
+router.post('/characters', requireToken, (req, res, next) => {
+	// set owner of new character to be current user
+	req.body.character.owner = req.user.id
 
-	Artifact.create(req.body.artifact)
-		// respond to succesful `create` with status 201 and JSON of new "artifact"
-		.then((artifact) => {
-			res.status(201).json({ artifact: artifact.toObject() })
+	Character.create(req.body.character)
+		// respond to succesful `create` with status 201 and JSON of new "character"
+		.then((character) => {
+			res.status(201).json({ character: character.toObject() })
 		})
 		// if an error occurs, pass it off to our error handler
 		// the error handler needs the error message and the `res` object so that it
@@ -80,22 +80,22 @@ router.post('/artifacts', requireToken, (req, res, next) => {
 })
 
 // UPDATE
-// PATCH /artifacts/5a7db6c74d55bc51bdf39793
-router.patch('/artifacts/:id', requireToken, removeBlanks, (req, res, next) => {
+// PATCH /characters/5a7db6c74d55bc51bdf39793
+router.patch('/characters/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
-	delete req.body.artifact.owner
+	delete req.body.character.owner
 	console.log('It was found ', req.params._id)
-	Artifact.findById(req.params.id)
+	Character.findById(req.params.id)
 		.then(handle404)
-		.then((artifact) => {
+		.then((character) => {
 			
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
-			requireOwnership(req, artifact)
+			requireOwnership(req, character)
 
 			// pass the result of Mongoose's `.update` to the next `.then`
-			return artifact.updateOne(req.body.artifact)
+			return character.updateOne(req.body.character)
 		})
 		// if that succeeded, return 204 and no JSON
 		.then(() => res.sendStatus(204))
@@ -104,15 +104,15 @@ router.patch('/artifacts/:id', requireToken, removeBlanks, (req, res, next) => {
 })
 
 // DESTROY
-// DELETE /artifacts/5a7db6c74d55bc51bdf39793
-router.delete('/artifacts/:id',  requireToken,  (req, res, next) => {
-	Artifact.findById(req.params.id)
+// DELETE /characters/5a7db6c74d55bc51bdf39793
+router.delete('/characters/:id',  requireToken,  (req, res, next) => {
+	Character.findById(req.params.id)
 		.then(handle404)
-		.then((artifact) => {
-			// throw an error if current user doesn't own `artifact`
-			requireOwnership(req, artifact)
-			// delete the artifact ONLY IF the above didn't throw
-			artifact.deleteOne()
+		.then((character) => {
+			// throw an error if current user doesn't own `character`
+			requireOwnership(req, character)
+			// delete the character ONLY IF the above didn't throw
+			character.deleteOne()
 		})
 		// send back 204 and no content if the deletion succeeded
 		.then(() => res.sendStatus(204))
