@@ -6,11 +6,6 @@ const characterSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	slot: {
-		type: String,
-		required: true,
-		enum: ["flower", "feather", "sands", "goblet", "circlet"]
-	},
 	level: {
 		type: Number,
 		required: true
@@ -19,20 +14,6 @@ const characterSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	mainStatAmount: {
-		type: Number,
-		required: true
-	},
-	substats: [{
-		stat: {
-			type: String,
-			required: true
-		},
-		amount: {
-			type: Number,
-			required: true
-		}
-	}],
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
