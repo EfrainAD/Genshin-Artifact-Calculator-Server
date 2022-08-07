@@ -9,6 +9,7 @@ const ratePower = (artifact) => {
   const substats = artifact.substats.map(thisSub => {
     thisSub.amount = Number(thisSub.amount);
     thisSub.weight = SUBSTAT_WEIGHTING[thisSub.stat];
+
     const subRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[thisSub.stat], thisSub.amount, thisSub.stat);
     thisSub.subRolls = subRolls;
     thisSub.rollCount = Math.min(...subRolls.map(dist => dist.length));

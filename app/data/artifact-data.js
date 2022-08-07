@@ -115,7 +115,7 @@ const DECIMAL_STATS = [
 // would be considered the most heavily.
 const SUBSTAT_WEIGHTING = {
   "Atk": 0,
-  "Atk%": 1,
+  "Atk%": 0,
   "HP": 0,
   "HP%": 0,
   "Def": 0,
