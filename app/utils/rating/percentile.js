@@ -100,12 +100,26 @@ const ratePercentile = (artifact) => {
     return `${Math.round(percentile * 1000) / 10}%`;
   }
 
-  return {
-    name: artifact.name,
-    usefulSubstatsRating: formatPercentile(usefulSubstatPercentile),
-    usefulRollsRating: formatPercentile(usefulRollsPercentile),
-    rollQualityRating: formatPercentile(rollQualityPercentile)
-  };
+  return [
+    {
+      name: "usefulSubstatsRating",
+      readableName: "Substat Utilization",
+      tooltipId: "usefulSubstatsRatingTooltip",
+      value: formatPercentile(usefulSubstatPercentile)
+    },
+    {
+      name: "usefulRollsRating",
+      readableName: "Roll Count Rating",
+      tooltipId: "usefulRollsRatingTooltip",
+      value: formatPercentile(usefulRollsPercentile)
+    },
+    {
+      name: "rollQualityRating",
+      readableName: "Roll Quality Rating",
+      tooltipId: "rollQualityRatingTooltip",
+      value: formatPercentile(rollQualityPercentile)
+    }
+  ];
 }
 
 // for testing purposes
