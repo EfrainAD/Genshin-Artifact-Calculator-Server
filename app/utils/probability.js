@@ -108,7 +108,6 @@ const weightedCategoriesRecursive = (desiredOutcomes, targetCount, finalDepth, w
       if (desiredOutcomes.includes(entry.entry)) { matches++; }
     });
 
-    
     // discard our currentPicks if we've exceeded targetCount, since this
     // recursion is for a cumulative-below distribution
     if (matches > targetCount) { return; }

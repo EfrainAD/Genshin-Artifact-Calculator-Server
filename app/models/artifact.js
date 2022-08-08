@@ -33,6 +33,9 @@ const artifactSchema = new mongoose.Schema({
 			required: true
 		}
 	}],
+	ratings: {
+		type: mongoose.SchemaTypes.Mixed
+	},
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",

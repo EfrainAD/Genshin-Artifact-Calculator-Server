@@ -19,6 +19,7 @@ const requireOwnership = customErrors.requireOwnership
 // this is middleware that will remove blank fields from `req.body`, e.g.
 // { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
+
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
 // it will also set `req.user`
@@ -26,6 +27,9 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
+
+// computational parts of artifact backend that generate ratings
+const rateAndValidate = require("../utils/rating/rate-and-validate.js");
 
 // INDEX
 // GET /artifacts
@@ -71,6 +75,9 @@ router.post('/artifacts', requireToken, (req, res, next) => {
 	Artifact.create(req.body.artifact)
 		// respond to succesful `create` with status 201 and JSON of new "artifact"
 		.then((artifact) => {
+			artifact.ratings = rateAndValidate(artifact);
+			artifact.save();
+
 			res.status(201).json({ artifact: artifact.toObject() })
 		})
 		// if an error occurs, pass it off to our error handler
@@ -85,7 +92,6 @@ router.patch('/artifacts/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
 	delete req.body.artifact.owner
-	console.log('It was found ', req.params._id)
 	Artifact.findById(req.params.id)
 		.then(handle404)
 		.then((artifact) => {
@@ -93,6 +99,9 @@ router.patch('/artifacts/:id', requireToken, removeBlanks, (req, res, next) => {
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
 			requireOwnership(req, artifact)
+
+			artifact.ratings = rateAndValidate(artifact);
+			artifact.save();
 
 			// pass the result of Mongoose's `.update` to the next `.then`
 			return artifact.updateOne(req.body.artifact)

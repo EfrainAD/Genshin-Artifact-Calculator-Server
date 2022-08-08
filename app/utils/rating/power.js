@@ -6,15 +6,15 @@ const findCombos = require("../find-combinations");
 const ratePower = (artifact) => {
   // pull more detailed information about each substat -- most importantly, how
   // many rolls went into it
-  const substats = artifact.substats.map(thisSub => {
-    thisSub.amount = Number(thisSub.amount);
-    thisSub.weight = SUBSTAT_WEIGHTING[thisSub.stat];
+  const substats = artifact.substats.map(sub => {
+    sub.amount = Number(sub.amount);
+    sub.weight = SUBSTAT_WEIGHTING[sub.stat];
 
-    const subRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[thisSub.stat], thisSub.amount, thisSub.stat);
-    thisSub.subRolls = subRolls;
-    thisSub.rollCount = Math.min(...subRolls.map(dist => dist.length));
+    const subRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[sub.stat], sub.amount, sub.stat);
+    sub.subRolls = subRolls;
+    sub.rollCount = Math.min(...subRolls.map(dist => dist.length));
 
-    return thisSub;
+    return sub;
   });
 
   // calculate the hypothetical maximum values of the substats that do matter,
@@ -46,12 +46,16 @@ const ratePower = (artifact) => {
 
   const substatUtilization = totalEffRolls / (HYPOTHETICAL_MAX_ROLLS - inaccessibleRolls);
 
-  // we can format this as a nicer number later
-  return substatUtilization;
+  return {
+    name: "powerRating",
+    readableName: "Relative Power Rating",
+    tooltipId: "powerRatingTooltip",
+    value: `${Math.round(substatUtilization  * 1000) / 10}%`
+  }
 }
 
 // for testing purposes
-const seed = require("../seed/seed.json");
-for (const artifact of seed) { console.log(ratePower(artifact)); }
+// const seed = require("../seed/seed.json");
+// for (const artifact of seed) { console.log(ratePower(artifact)); }
 
 module.exports = ratePower;
