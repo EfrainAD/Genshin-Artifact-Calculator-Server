@@ -48,7 +48,9 @@ const getSubFreqDist = (artifact = null, takenSubstats = []) => {
   // first, elucidate all substat weights
   const subWeights = { ...SUBSTAT_WEIGHTS };
   // a substat can't be the same as the main stat, so remove that one
-  if (artifact) { delete subWeights[artifact.mainStat]; }
+  if (artifact && subWeights[artifact.mainStat]) {
+    delete subWeights[artifact.mainStat];
+  }
   // duplicate substats aren't allowed, so remove all of those as well
   takenSubstats.forEach(sub => delete subWeights[sub]);
 

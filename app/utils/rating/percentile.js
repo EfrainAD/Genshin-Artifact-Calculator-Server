@@ -79,7 +79,7 @@ const ratePercentile = (artifact) => {
   let maxUsefulSubCount = Object.values(SUBSTAT_WEIGHTING).reduce((n, weight) => (n + weight), 0);
   // a useful main stat can never be rolled as a substat
   if (SUBSTAT_WEIGHTING[artifact.mainStat]) { maxUsefulSubCount -= 1; }
-  
+
   let usefulSubstatPercentile;
   if (usefulSubCount === 4 || usefulSubCount >= maxUsefulSubCount) {
     usefulSubstatPercentile = 1;
@@ -93,17 +93,23 @@ const ratePercentile = (artifact) => {
 
     usefulSubstatPercentile = prob.weightedCategoriesBelowInc(desiredSubs, usefulSubCount, NUMBER_OF_SUBSTATS, initialSubFreq);
   }
-  
-  console.log(usefulSubstatPercentile);
 
-  // part 4: finally, aggregate all the percentiles of these various areas in
-  // a sensible way to arrive at a final value for the artifact's relative
-  // scarcity given its power.
-  // console.log(artifact.name, usefulRollsPercentile, rollQualityPercentile, usefulSubstatPercentile);
+  // part 4: finally, return the three separate ratings, formatted as percents
+  // and rounded to one decimal place.
+  const formatPercentile = (percentile) => {
+    return `${Math.round(percentile * 1000) / 10}%`;
+  }
+
+  return {
+    name: artifact.name,
+    usefulSubstatsRating: formatPercentile(usefulSubstatPercentile),
+    usefulRollsRating: formatPercentile(usefulRollsPercentile),
+    rollQualityRating: formatPercentile(rollQualityPercentile)
+  };
 }
 
 // for testing purposes
-const seed = require("../seed/seed.json");
-for (const artifact of seed) { console.log(ratePercentile(artifact)); }
+// const seed = require("../seed/seed.json");
+// for (const artifact of seed) { console.log(ratePercentile(artifact)); }
 
 module.exports = ratePercentile;

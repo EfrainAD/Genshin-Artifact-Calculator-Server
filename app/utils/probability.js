@@ -112,7 +112,7 @@ const weightedCategoriesRecursive = (desiredOutcomes, targetCount, finalDepth, w
     // discard our currentPicks if we've exceeded targetCount, since this
     // recursion is for a cumulative-below distribution
     if (matches > targetCount) { return; }
-    
+
     // now, sort the entries in currentPicks by lex order...
     currentPicks.sort((e1, e2) => (e1.entry.localeCompare(e2.entry)));
     // ... so that we can aggregate them in the results hashmap.
@@ -159,9 +159,8 @@ const weightedCategoriesBelowInc = (desiredOutcomes, targetCount, finalDepth, in
   const results = [];
   weightedCategoriesRecursive(desiredOutcomes, targetCount, finalDepth, initialWeightTable, results);
 
-  // console.log(results)
-  const sum = Object.values(results).reduce((sum, p) => (sum + p), 0);
-  console.log("probability sum:", sum)
+  const cumProb = Object.values(results).reduce((sum, p) => (sum + p), 0);
+  return cumProb;
 }
 
 // exports
