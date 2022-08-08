@@ -65,6 +65,38 @@ const binomCumAboveInc = (n, k, p) => {
   return rerange(binomCumAbove(n, k, p) + binom(n, k, p));
 }
 
+const rollSumRecursive = (possibleRolls, targetSum, n, count, rolls = []) => {
+  // check the success condition and halt once we're at the correct number of
+  // rolls, updating the count if successful
+  if (rolls.length === n) { 
+    const sum = rolls.reduce((sum, roll) => (sum + roll), 0);
+    if (sum <= targetSum) { count.count++; }
+    return;
+   }
+
+  for (const roll of possibleRolls) {
+    rollSumRecursive(possibleRolls, targetSum, n, count, [...rolls, roll]);
+  }
+}
+
+// to put it plainly, this function calculates the chance that n rolls of a
+// numOutcomes-sided die labeled from 0 to (numOutcomes - 1) will sum be to less 
+// than or equal to targetSum.
+const rollSumBelowInc = (n, targetSum, numOutcomes) => {
+  // a lot of clever solutions were considered here, but at the end of the day
+  // I'm just going to go with a brute force method -- the number of possible
+  // outcomes will (usually) be something reasonable, and this is much faster
+  // to implement than something efficient but clever, which is exactly what we
+  // need for this very limited amount of project time
+  const possibleRolls = (Array(numOutcomes)).fill(null).map((el, i) => i);
+  const count = {count: 0};
+  rollSumRecursive(possibleRolls, targetSum, n, count);
+  
+  // count will now contain the number of combinations that lead to rolls that
+  // are worse than or equivalent to ours; we can convert this into a probability
+  // by simply dividing by the number of possible outcomes
+  return count.count / Math.pow(numOutcomes, n);
+}
 
 // exports
 module.exports = {
@@ -72,5 +104,6 @@ module.exports = {
   binomCumBelow,
   binomCumAbove,
   binomCumBelowInc,
-  binomCumAboveInc
+  binomCumAboveInc,
+  rollSumBelowInc
 }
