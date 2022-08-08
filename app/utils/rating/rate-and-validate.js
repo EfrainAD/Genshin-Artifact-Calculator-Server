@@ -11,6 +11,7 @@ const rateAndValidate = (artifact) => {
 
   // only rate level 20 artifacts, for computational simplicity (read: for my
   // own sanity)
+  console.log(artifact.level);
   if (artifact.level !== 20) {
     error.messageName = "rateLevelFailure";
     return error;
@@ -29,7 +30,7 @@ const rateAndValidate = (artifact) => {
 
   const ratings = ratePercentile(artifact);
   ratings.push(ratePower(artifact));
-  
+
   return ratings;
 }
 
