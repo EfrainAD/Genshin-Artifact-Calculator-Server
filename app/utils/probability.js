@@ -68,7 +68,7 @@ const binomCumAboveInc = (n, k, p) => {
 const rollSumRecursive = (possibleRolls, targetSum, n, count, rolls = []) => {
   // check the success condition and halt once we're at the correct number of
   // rolls, updating the count if successful
-  if (rolls.length === n) { 
+  if (rolls.length >= n) { 
     const sum = rolls.reduce((sum, roll) => (sum + roll), 0);
     if (sum <= targetSum) { count.count++; }
     return;
@@ -98,6 +98,72 @@ const rollSumBelowInc = (n, targetSum, numOutcomes) => {
   return count.count / Math.pow(numOutcomes, n);
 }
 
+const weightedCategoriesRecursive = (desiredOutcomes, targetCount, finalDepth, weightTable, results, currentPicks = []) => {
+  // halt and evaluate if maximum depth has been reached
+  if (currentPicks.length >= finalDepth) {
+    // we do want to do some postprocessing here for our own sanity. first,
+    // figure out how many of our desiredOutcomes ended up in currentPicks.
+    let matches = 0;
+    currentPicks.forEach(entry => {
+      if (desiredOutcomes.includes(entry.entry)) { matches++; }
+    });
+
+    
+    // discard our currentPicks if we've exceeded targetCount, since this
+    // recursion is for a cumulative-below distribution
+    if (matches > targetCount) { return; }
+    
+    // now, sort the entries in currentPicks by lex order...
+    currentPicks.sort((e1, e2) => (e1.entry.localeCompare(e2.entry)));
+    // ... so that we can aggregate them in the results hashmap.
+    const currentResultNames = currentPicks.map(entry => entry.entry);
+    const currentResultProb = currentPicks.reduce((p, entry) => (p * entry.prob), 1);
+    
+    // aggregate the probabilities and halt
+    results[currentResultNames] === undefined ?
+      results[currentResultNames] = currentResultProb :
+      results[currentResultNames] += currentResultProb;
+
+    return;
+  }
+
+  // otherwise, continue to search recursively through whatever's left of the
+  // weight table
+  const weightProbabilities = {};
+  const totalWeight = Object.values(weightTable).reduce((sum, w) => (sum + w), 0);
+  Object.keys(weightTable).forEach(entry => {
+    weightProbabilities[entry] = weightTable[entry] / totalWeight;
+  })
+
+  for (const entry in weightTable) {
+    // remove the selected substat from the next weight table
+    const nextWeightTable = { ...weightTable };
+    delete nextWeightTable[entry];
+
+    weightedCategoriesRecursive(desiredOutcomes, targetCount, finalDepth, nextWeightTable, results, [
+      ...currentPicks,
+      {
+        entry: entry,
+        prob: weightProbabilities[entry]
+      }
+    ]);
+  }
+}
+
+// I initially thought the calculations for this would be tricky but doable, but
+// after attempting to sketch them out, I realized that the varying weights for
+// all of the different components made a simple, closed-form solution beyond my
+// grasp in a reasonable time frame. it's time for brute force again, yay!!!
+const weightedCategoriesBelowInc = (desiredOutcomes, targetCount, finalDepth, initialWeightTable) => {
+
+  const results = [];
+  weightedCategoriesRecursive(desiredOutcomes, targetCount, finalDepth, initialWeightTable, results);
+
+  // console.log(results)
+  const sum = Object.values(results).reduce((sum, p) => (sum + p), 0);
+  console.log("probability sum:", sum)
+}
+
 // exports
 module.exports = {
   binom,
@@ -105,5 +171,6 @@ module.exports = {
   binomCumAbove,
   binomCumBelowInc,
   binomCumAboveInc,
-  rollSumBelowInc
-}
+  rollSumBelowInc,
+  weightedCategoriesBelowInc
+};

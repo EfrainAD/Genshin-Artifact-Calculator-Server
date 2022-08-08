@@ -44,20 +44,16 @@ const SUBSTAT_WEIGHTS = {
   "critDmg": 3
 }
 
-const getSubFreqDist = (artifact) => {
-  const { mainStat } = artifact;
-
+const getSubFreqDist = (artifact = null, takenSubstats = []) => {
   // first, elucidate all substat weights
   const subWeights = { ...SUBSTAT_WEIGHTS };
   // a substat can't be the same as the main stat, so remove that one
-  delete subWeights[mainStat];
+  if (artifact) { delete subWeights[artifact.mainStat]; }
+  // duplicate substats aren't allowed, so remove all of those as well
+  takenSubstats.forEach(sub => delete subWeights[sub]);
 
-  // find the total weight and convert the weights to probabilities
-  const totalWeight = Object.values(subWeights).reduce((sum, n) => (sum + n));
-  const subFreqs = { ...subWeights };
-  for (const subName in subFreqs) { subFreqs[subName] /= totalWeight; }
-
-  return subFreqs;
+  // return the weight table
+  return subWeights;
 }
 
 // for testing purposes

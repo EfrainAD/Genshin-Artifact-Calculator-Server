@@ -8,7 +8,6 @@ const prob = require("../probability");
 const ratePercentile = (artifact) => {
   // pull more detailed information about each substat -- most importantly, how
   // many rolls went into it and the probability of its existence
-  const subFreqDist = getSubFreqDist(artifact);
   const substats = artifact.substats.map(thisSub => {
     thisSub.amount = Number(thisSub.amount);
     thisSub.weight = SUBSTAT_WEIGHTING[thisSub.stat];
@@ -18,8 +17,6 @@ const ratePercentile = (artifact) => {
     // this is calculated slightly differently here than it is in power.js;
     // the probability calculation here takes different values into account
     thisSub.rollCount = Math.min(...subRolls.map(dist => dist.length)) - 1;
-
-    thisSub.prob = subFreqDist[thisSub.stat];
 
     return thisSub;
   });
@@ -37,7 +34,9 @@ const ratePercentile = (artifact) => {
 
   // part 1: number of useful rolls. weight the percentile calculations based
   // on MAX_SUBSTAT_CHANCE (there's a MAX_SUBSTAT_CHANCE of having MAX_ROLLS
-  // in total, and a (1 - MAX_SUBSTAT_CHANCE) of having MAX_ROLLS - 1).
+  // in total, and a (1 - MAX_SUBSTAT_CHANCE) of having MAX_ROLLS - 1). this
+  // calculation deals only with how many useful rolls we got, and ignores the
+  // identity or quality of those useful rolls -- we deal with that separately.
   const usefulRollsPercentile = prob.binomCumBelowInc(MAX_ROLLS, usefulRollCount, (1 / NUMBER_OF_SUBSTATS) * usefulSubCount) * MAX_SUBSTAT_CHANCE + prob.binomCumBelowInc(MAX_ROLLS - 1, usefulRollCount, (1 / NUMBER_OF_SUBSTATS) * usefulSubCount) * (1 - MAX_SUBSTAT_CHANCE);
 
   // part 2: quality of rolls. this was somewhat tricky to pin down because each
@@ -69,13 +68,38 @@ const ratePercentile = (artifact) => {
 
   const rollQualityPercentile = prob.rollSumBelowInc(totalRolls, totalQuality, NUM_POSSIBLE_ROLLS);
 
-  // part 3: number of useful substats. the part that's going to make me
-  // implement a hypergeometric calculator >:(
+  // part 3: number of useful substats. since substats aren't weighted evenly,
+  // the calculation for how probable your substats themselves are is a little
+  // tricky to run as well. there is one important check we can do that does
+  // simplify our work a bit, at least.
 
+  // if our artifact has four useful substats, or has more useful substats than
+  // what we've predefined in SUBSTAT_WEIGHTING, it literally cannot do better
+  // in this area, which removes the need for any calculation.
+  let maxUsefulSubCount = Object.values(SUBSTAT_WEIGHTING).reduce((n, weight) => (n + weight), 0);
+  // a useful main stat can never be rolled as a substat
+  if (SUBSTAT_WEIGHTING[artifact.mainStat]) { maxUsefulSubCount -= 1; }
+  
+  let usefulSubstatPercentile;
+  if (usefulSubCount === 4 || usefulSubCount >= maxUsefulSubCount) {
+    usefulSubstatPercentile = 1;
+  } else if (usefulSubCount === 0) {
+    usefulSubstatPercentile = 0;
+  } else {
+    const desiredSubs = Object.keys(SUBSTAT_WEIGHTING).filter(sub => {
+      return SUBSTAT_WEIGHTING[sub];
+    });
+    const initialSubFreq = getSubFreqDist(artifact);
+
+    usefulSubstatPercentile = prob.weightedCategoriesBelowInc(desiredSubs, usefulSubCount, NUMBER_OF_SUBSTATS, initialSubFreq);
+  }
+  
+  console.log(usefulSubstatPercentile);
 
   // part 4: finally, aggregate all the percentiles of these various areas in
   // a sensible way to arrive at a final value for the artifact's relative
   // scarcity given its power.
+  // console.log(artifact.name, usefulRollsPercentile, rollQualityPercentile, usefulSubstatPercentile);
 }
 
 // for testing purposes
