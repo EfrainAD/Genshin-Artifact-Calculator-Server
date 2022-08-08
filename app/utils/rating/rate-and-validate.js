@@ -5,13 +5,13 @@ const ratePercentile = require("./percentile");
 const ratePower = require("./power");
 const findCombos = require("../find-combinations.js");
 const { POSSIBLE_SUBSTAT_ROLLS } = require("../../data/artifact-data.js");
+const User = require("../../models/user");
 
-const rateAndValidate = (artifact) => {
+const rateAndValidate = async (artifact, userId) => {
   const error = {error: true};
 
   // only rate level 20 artifacts, for computational simplicity (read: for my
   // own sanity)
-  console.log(artifact.level);
   if (artifact.level !== 20) {
     error.messageName = "rateLevelFailure";
     return error;
@@ -28,8 +28,9 @@ const rateAndValidate = (artifact) => {
     }
   }
 
-  const ratings = ratePercentile(artifact);
-  ratings.push(ratePower(artifact));
+  const substatWeighting = (await User.findById(userId)).substatWeighting;
+  const ratings = ratePercentile(artifact, substatWeighting);
+  ratings.push(ratePower(artifact, substatWeighting));
 
   return ratings;
 }

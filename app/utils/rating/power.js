@@ -1,14 +1,14 @@
-const { POSSIBLE_SUBSTAT_ROLLS, SUBSTAT_WEIGHTING } = require("../../data/artifact-data");
+const { POSSIBLE_SUBSTAT_ROLLS } = require("../../data/artifact-data");
 const findCombos = require("../find-combinations");
 
 // given an artifact, calculates its power rating -- that is, how strong it is
 // compared to the theoretically best artifact with the given substat types.
-const ratePower = (artifact) => {
+const ratePower = (artifact, substatWeighting) => {
   // pull more detailed information about each substat -- most importantly, how
   // many rolls went into it
   const substats = artifact.substats.map(sub => {
     sub.amount = Number(sub.amount);
-    sub.weight = SUBSTAT_WEIGHTING[sub.stat];
+    sub.weight = substatWeighting[sub.stat];
 
     const subRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[sub.stat], sub.amount, sub.stat);
     sub.subRolls = subRolls;
