@@ -10,10 +10,6 @@ const characterSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
-	mainStat: {
-		type: String,
-		required: true
-	},
 	owner: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
@@ -21,11 +17,6 @@ const characterSchema = new mongoose.Schema({
 	}
 }, {
 	timestamps: true,
-});
-
-// find the character's set from its proper name and its slot
-characterSchema.virtual("set").get(function() {
-	return getSetFromName(this.name, this.slot);
 });
 
 module.exports = mongoose.model("Character", characterSchema);

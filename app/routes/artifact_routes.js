@@ -76,7 +76,6 @@ router.post('/artifacts', requireToken, (req, res, next) => {
 		// respond to succesful `create` with status 201 and JSON of new "artifact"
 		.then(async (artifact) => {
 			artifact.ratings = await rateAndValidate(artifact, req.user.id);
-			console.log(artifact);
 			artifact.save();
 
 			res.status(201).json({ artifact: artifact.toObject() })
