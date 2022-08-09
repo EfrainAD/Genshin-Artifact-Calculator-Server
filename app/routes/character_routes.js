@@ -27,6 +27,9 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
+// for form safety
+const { VALID_CHARACTER_NAMES } = require("../data/artifact-data.js");
+
 // INDEX
 // GET /characters
 router.get('/characters',  requireToken,  (req, res, next) => {
@@ -45,6 +48,19 @@ router.get('/characters',  requireToken,  (req, res, next) => {
 		})
 		// if an error occurs, pass it to the handler
 		.catch(next);
+})
+
+router.get("/characters/fetch-valid", requireToken, async (req, res, next) => {
+	// fetch the user's characters
+	const userId = req.user.id;
+	const ownedChars = (await Character.find({owner: userId})).map(ch => ch.name);
+
+	// filter out all the characters the user currently has, since duplicates
+	// are not valid
+	const currentValidChars = VALID_CHARACTER_NAMES.filter(ch => !ownedChars.includes(ch))
+	
+	// return that list to the client
+	res.status(200).json({ validCharacters: currentValidChars })
 })
 
 // SHOW
