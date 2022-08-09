@@ -12,6 +12,7 @@ const rateAndValidate = async (artifact, userId) => {
 
   // only rate level 20 artifacts, for computational simplicity (read: for my
   // own sanity)
+  artifact.level = Number(artifact.level);
   if (artifact.level !== 20) {
     error.messageName = "rateLevelFailure";
     return error;
