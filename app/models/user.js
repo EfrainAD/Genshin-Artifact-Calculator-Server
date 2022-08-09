@@ -11,6 +11,22 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		substatWeighting: {
+			type: mongoose.SchemaTypes.Mixed,
+			required: true,
+			default: {
+				"Atk": 0,
+				"Atk%": 0,
+				"HP": 0,
+				"HP%": 0,
+				"Def": 0,
+				"Def%": 0,
+				"critRate": 1,
+				"critDmg": 1,
+				"EM": 0,
+				"ER": 0
+			}
+		},
 		token: String,
 	},
 	{

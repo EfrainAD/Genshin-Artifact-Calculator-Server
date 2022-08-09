@@ -16,6 +16,8 @@ const BadParamsError = errors.BadParamsError
 const BadCredentialsError = errors.BadCredentialsError
 
 const User = require('../models/user')
+const Artifact = require("../models/artifact.js");
+const rateAndValidate = require('../utils/rating/rate-and-validate');
 
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -132,6 +134,39 @@ router.patch('/change-password', requireToken, (req, res, next) => {
 		// pass any errors along to the error handler
 		.catch(next)
 })
+
+// GET substat preferences
+router.get("/get-substat-prefs", requireToken, (req, res, next) => {
+	User.findById(req.user.id)
+		.then(user => {
+			res.status(200).json({ userPrefs: user.substatWeighting });
+		})
+		.catch(next);
+});
+
+// CHANGE substat preferences
+router.patch("/update-substat-prefs", requireToken, (req, res, next) => {
+	const newPrefs = req.body.newPrefs;
+	User.findById(req.user.id)
+		// first, save the new preferences
+		.then(user => {
+			user.substatWeighting = newPrefs;
+			user.save();
+			return user._id;
+		})
+		// then, update all of the user's artifact ratings using the new prefs
+		.then(userId => {
+			Artifact.find({owner: userId})
+				.then(async (artifacts) => {
+					for (const artifact of artifacts) {
+						artifact.ratings = await rateAndValidate(artifact, userId);
+						artifact.save();
+					}
+				})
+		})
+		.then(() => res.sendStatus(204))
+		.catch(next);
+});
 
 router.delete('/sign-out', requireToken, (req, res, next) => {
 	// create a new random token for the user, invalidating the current one

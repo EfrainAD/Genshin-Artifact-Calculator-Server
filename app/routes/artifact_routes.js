@@ -74,8 +74,9 @@ router.post('/artifacts', requireToken, (req, res, next) => {
 
 	Artifact.create(req.body.artifact)
 		// respond to succesful `create` with status 201 and JSON of new "artifact"
-		.then((artifact) => {
-			artifact.ratings = rateAndValidate(artifact);
+		.then(async (artifact) => {
+			artifact.ratings = await rateAndValidate(artifact, req.user.id);
+			console.log(artifact);
 			artifact.save();
 
 			res.status(201).json({ artifact: artifact.toObject() })
@@ -92,19 +93,20 @@ router.patch('/artifacts/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
 	delete req.body.artifact.owner
+
+	const newArtifact = req.body.artifact;
 	Artifact.findById(req.params.id)
 		.then(handle404)
-		.then((artifact) => {
+		.then(async (artifact) => {
 			
 			// pass the `req` object and the Mongoose record to `requireOwnership`
 			// it will throw an error if the current user isn't the owner
 			requireOwnership(req, artifact)
 
-			artifact.ratings = rateAndValidate(artifact);
-			artifact.save();
+			newArtifact.ratings = await rateAndValidate(newArtifact, req.user.id);
 
 			// pass the result of Mongoose's `.update` to the next `.then`
-			return artifact.updateOne(req.body.artifact)
+			return artifact.updateOne(newArtifact)
 		})
 		// if that succeeded, return 204 and no JSON
 		.then(() => res.sendStatus(204))

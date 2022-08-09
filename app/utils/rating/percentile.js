@@ -1,16 +1,16 @@
-const { POSSIBLE_SUBSTAT_ROLLS, SUBSTAT_WEIGHTING } = require("../../data/artifact-data");
+const { POSSIBLE_SUBSTAT_ROLLS } = require("../../data/artifact-data");
 const getSubFreqDist = require("../substat-frequency");
 const findCombos = require("../find-combinations");
 const prob = require("../probability");
 
 // given an artifact, calculates its percentile rating -- that is, how good it
 // is compared to all other possible artifacts with the given main stat.
-const ratePercentile = (artifact) => {
+const ratePercentile = (artifact, substatWeighting) => {
   // pull more detailed information about each substat -- most importantly, how
   // many rolls went into it and the probability of its existence
   const substats = artifact.substats.map(thisSub => {
     thisSub.amount = Number(thisSub.amount);
-    thisSub.weight = SUBSTAT_WEIGHTING[thisSub.stat];
+    thisSub.weight = substatWeighting[thisSub.stat];
 
     const subRolls = findCombos(POSSIBLE_SUBSTAT_ROLLS[thisSub.stat], thisSub.amount, thisSub.stat);
     thisSub.subRolls = subRolls;
@@ -74,11 +74,11 @@ const ratePercentile = (artifact) => {
   // simplify our work a bit, at least.
 
   // if our artifact has four useful substats, or has more useful substats than
-  // what we've predefined in SUBSTAT_WEIGHTING, it literally cannot do better
+  // what the user wants (from substatWeighting), it literally cannot do better
   // in this area, which removes the need for any calculation.
-  let maxUsefulSubCount = Object.values(SUBSTAT_WEIGHTING).reduce((n, weight) => (n + weight), 0);
+  let maxUsefulSubCount = Object.values(substatWeighting).reduce((n, weight) => (n + weight), 0);
   // a useful main stat can never be rolled as a substat
-  if (SUBSTAT_WEIGHTING[artifact.mainStat]) { maxUsefulSubCount -= 1; }
+  if (substatWeighting[artifact.mainStat]) { maxUsefulSubCount -= 1; }
 
   let usefulSubstatPercentile;
   if (usefulSubCount === 4 || usefulSubCount >= maxUsefulSubCount) {
@@ -86,8 +86,8 @@ const ratePercentile = (artifact) => {
   } else if (usefulSubCount === 0) {
     usefulSubstatPercentile = 0;
   } else {
-    const desiredSubs = Object.keys(SUBSTAT_WEIGHTING).filter(sub => {
-      return SUBSTAT_WEIGHTING[sub];
+    const desiredSubs = Object.keys(substatWeighting).filter(sub => {
+      return substatWeighting[sub];
     });
     const initialSubFreq = getSubFreqDist(artifact);
 
