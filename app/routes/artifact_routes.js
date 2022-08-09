@@ -31,6 +31,9 @@ const router = express.Router()
 // computational parts of artifact backend that generate ratings
 const rateAndValidate = require("../utils/rating/rate-and-validate.js");
 
+// data for the seed route
+const seedData = require("../utils/seed/seed.json");
+
 // INDEX
 // GET /artifacts
 router.get('/artifacts',  requireToken,  (req, res, next) => {
@@ -51,9 +54,23 @@ router.get('/artifacts',  requireToken,  (req, res, next) => {
 		.catch(next);
 })
 
+// seed
+router.get("/artifacts/seed", requireToken, async (req, res, next) => {
+	const userId = req.user.id;
+
+	const toSeed = [ ...seedData ];
+	for (const seedEntry of toSeed) {
+		seedEntry.owner = userId;
+		seedEntry.ratings = await rateAndValidate(seedEntry, userId);
+		await Artifact.create(seedEntry);
+	}
+
+	res.sendStatus(204);
+})
+
 // SHOW
 // GET /artifacts/5a7db6c74d55bc51bdf39793
-router.get('/artifacts/:id',  requireToken,  (req, res, next) => {
+router.get('/artifacts/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Artifact.findOne({_id: req.params.id, owner: req.user.id})
 		.then(handle404)
